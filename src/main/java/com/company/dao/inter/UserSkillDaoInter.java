@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.dao.inter;
+package com.company.dao.inter;
 
 import com.company.entity.UserSkill;
 import java.util.List;
@@ -14,6 +14,14 @@ import java.util.List;
  */
 public interface UserSkillDaoInter {
 
-    public List<UserSkill> getAllSkillByUserId(int userId);
+    public List<UserSkill> getById(int userId);
+
+    public List<UserSkill> getAll();
+
+    public boolean insertUserSkill(UserSkill u);
+
+    public boolean updateUserSkill(UserSkill u);
+
+    public boolean deleteUserSkill(int id);
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.dao.inter;
+package com.company.dao.inter;
 
 import com.company.entity.EmploymentHistory;
 import java.util.List;
@@ -14,6 +14,14 @@ import java.util.List;
  */
 public interface EmploymentHistoryDaoInter {
 
-    public List<EmploymentHistory> getAllEmploymentHistoryByUserId(int userId);
+    public List<EmploymentHistory> getById(int userId);
+
+    public List<EmploymentHistory> getAll();
+
+    public boolean insertEmploymentHistory(EmploymentHistory emp);
+
+    public boolean updateEmploymentHistory(EmploymentHistory emp);
+
+    public boolean deleteEmploymentHistory(int id);
 
 }

@@ -19,9 +19,11 @@ public class User {
     private String surname;
     private String phone;
     private String email;
+    private String profileDesc;
     private Date birthDate;
     private Country nationality;
     private Country birthPlace;
+    private String address;
     private List<UserSkill> skills;
 
     public User() {
@@ -31,15 +33,18 @@ public class User {
         this.id = id;
     }
 
-    public User(int id, String name, String surname, String phone, String email, Date birthDate, Country nationality, Country birthPlace) {
+    public User(int id, String name, String surname, String phone, String email, String profileDesc, Date birthDate, Country nationality, Country birthPlace, String address) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
+        this.profileDesc = profileDesc;
         this.birthDate = birthDate;
         this.nationality = nationality;
         this.birthPlace = birthPlace;
+        this.address = address;
+
     }
 
     public int getId() {
@@ -106,24 +111,26 @@ public class User {
         this.birthPlace = birthPlace;
     }
 
-    public List<UserSkill> getSkills() {
-        return skills;
+    public String getProfileDesc() {
+        return profileDesc;
     }
 
-    public void setSkills(List<UserSkill> skills) {
-        this.skills = skills;
+    public void setProfileDesc(String profileDesc) {
+        this.profileDesc = profileDesc;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", phone=" + phone + ", email=" + email + ", birthDate=" + birthDate + ", nationality=" + nationality + ", birthPlace=" + birthPlace + ", skills=" + skills + '}';
+        return "User{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", phone=" + phone + ", email=" + email + ", profileDesc=" + profileDesc + ", birthDate=" + birthDate + ", nationality=" + nationality + ", birthPlace=" + birthPlace + ", address=" + address + '}';
     }
 
-   
-
-  
-
-  
-   
-
+    
 }

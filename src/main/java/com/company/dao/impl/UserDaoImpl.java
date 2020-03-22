@@ -4,9 +4,8 @@ import com.company.entity.Country;
 import com.company.entity.Skill;
 import com.company.entity.User;
 import com.company.entity.UserSkill;
-import com.mycompany.dao.inter.AbstractDAO;
-import com.mycompany.dao.inter.UserDaoInter;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import com.company.dao.inter.AbstractDAO;
+import com.company.dao.inter.UserDaoInter;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -27,16 +26,18 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
         String surname = rs.getString("surname");
         String phone = rs.getString("phone");
         String email = rs.getString("email");
+        String profileDesc = rs.getString("profile_description");
         int nationalityId = rs.getInt("nationality_id");
         int birthplaceId = rs.getInt("birthplace_id");
         String nationalityStr = rs.getString("nationality");
         String birthplaceStr = rs.getString("birthplace");
         Date birthdate = rs.getDate("birthdate");
+        String address = rs.getString("address");
 
         Country nationality = new Country(nationalityId, null, nationalityStr);
         Country birthplace = new Country(birthplaceId, birthplaceStr, null);
 
-        return new User(id, name, surname, phone, email, birthdate, nationality, birthplace);
+        return new User(id, name, surname, phone, email, profileDesc, birthdate, nationality, birthplace, address);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
 
             Statement stmt = c.createStatement();
             stmt.execute(" select "
-                    + " u.*, "
+                    + " u.* , "
                     + "	 n.nationality , "
                     + "	 c.name as birthplace "
                     + "	 FROM user u "
@@ -69,12 +70,16 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
     @Override
     public boolean updateUser(User u) {
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("update user set name=?,surname=?,phone=?,email=? where id =?");
+            PreparedStatement stmt = c.prepareStatement(" update user set name=?, surname=?, phone=?, email=?, profile_description = ?, birthdate = ?, address = ?, birthplace_id = ? where id =? ");
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getSurname());
             stmt.setString(3, u.getPhone());
             stmt.setString(4, u.getEmail());
-            stmt.setInt(5, u.getId());
+            stmt.setString(5, u.getProfileDesc());
+            stmt.setDate(6, u.getBirthDate());
+            stmt.setString(7, u.getAddress());
+            stmt.setInt(8, u.getBirthPlace().getId());
+            stmt.setInt(9, u.getId());
 
             return stmt.execute();
 
@@ -85,10 +90,10 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
     }
 
     @Override
-    public boolean removeUser(int id) {
+    public boolean deleteUser(int id) {
         try (Connection c = connect()) {
             Statement stmt = c.createStatement();
-            return stmt.execute("delete from user where id=" + id);
+            return stmt.execute(" delete from user where id= " + id);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -103,7 +108,7 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
 
             Statement stmt = c.createStatement();
             stmt.execute(" select "
-                    + " u.*, "
+                    + " u.* , "
                     + " n.nationality , "
                     + " c.name as birthplace "
                     + " FROM user u "
@@ -121,14 +126,17 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
         return result;
     }
 
-   @Override
-    public boolean addUser(User u) {
+    @Override
+    public boolean insertUser(User u) {
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("insert into user(name,surname,phone,email) values(?,?,?,?)");
+            PreparedStatement stmt = c.prepareStatement(" insert into user(name, surname, phone, email, profile_description ,address, birthplace_id ) values(?,?,?,?,?,?,?) ");
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getSurname());
             stmt.setString(3, u.getPhone());
             stmt.setString(4, u.getEmail());
+            stmt.setString(5, u.getProfileDesc());
+            stmt.setString(6, u.getAddress());
+            stmt.setInt(7, u.getBirthPlace().getId());
 
             return stmt.execute();
 
@@ -137,7 +145,5 @@ public class UserDaoImpl extends AbstractDAO implements UserDaoInter {
             return false;
         }
     }
-
-
 
 }

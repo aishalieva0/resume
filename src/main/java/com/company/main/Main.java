@@ -5,8 +5,11 @@
  */
 package com.company.main;
 
-import com.mycompany.dao.inter.EmploymentHistoryDaoInter;
-import com.mycompany.dao.inter.UserSkillDaoInter;
+import com.company.dao.inter.CountryDaoInter;
+import com.company.dao.inter.EmploymentHistoryDaoInter;
+import com.company.dao.inter.SkillDaoInter;
+import com.company.dao.inter.UserDaoInter;
+import com.company.dao.inter.UserSkillDaoInter;
 
 /**
  *
@@ -15,8 +18,11 @@ import com.mycompany.dao.inter.UserSkillDaoInter;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        EmploymentHistoryDaoInter dao = Context.instanceEmploymentHistoryDao();
+        EmploymentHistoryDaoInter emp = Context.instanceEmploymentHistoryDao();
+        CountryDaoInter c = Context.instanceCountryDao();
+        SkillDaoInter s = Context.instanceSkillDao();
+        UserSkillDaoInter us = Context.instanceUserSkillDao();
+        UserDaoInter u = Context.instanceUserDao();
 
-        System.out.println(dao.getAllEmploymentHistoryByUserId(6));
     }
 }

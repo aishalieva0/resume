@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.dao.inter;
+package com.company.dao.inter;
 
 import com.company.entity.Country;
 import java.util.List;
@@ -14,6 +14,14 @@ import java.util.List;
  */
 public interface CountryDaoInter {
 
-    public List<Country> getAllCountryByUserId(int userId);
+    public List<Country> getById(int userId);
+
+    public List<Country> getAll();
+
+    public boolean insertCountry(Country country);
+
+    public boolean updateCountry(Country country);
+
+    public boolean deleteCountry(int id);
 
 }
